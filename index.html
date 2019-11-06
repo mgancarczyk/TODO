@@ -1,30 +1,96 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="style/style.css">
-        <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
-        <script src="script/script.js"></script>
-        
-        <title> TODO </title>
-    </head>
 
-    <body>
-        <div>
-            <div class="banner">
-                <h1> To Do List </h1>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+    <script src="./script.js"></script>
+    <title>Todos</title>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="mdc-typography" onload="loadCollections()">
+    <div id="root">
+        <div class="drawer-frame-root">
+            <aside class="mdc-drawer">
+                <div class="header mdc-drawer__header">
+                    <img class="avatar-image" src="https://cdn.iconscout.com/icon/free/png-256/avatar-375-456327.png" />
+                    <h6 class="mdc-drawer__subtitle">mt.gancarczyk@gmail.com</h6>
+                </div>
+                <div class="mdc-drawer__content">
+                    <nav id="navigation" class="mdc-list">
+                    </nav>
+                    <button id="add-collection-button" class="mdc-button mdc-button--raised"
+                        onclick="openCollectionCreationModal()">
+                        <span class="material-icons mdc-fab__icon">add</span>
+                        Add
+                    </button>
+                </div>
+            </aside>
+            <div class="drawer-frame-app-content">
+                <header class="mdc-top-app-bar--fixed-adjust drawer-top-app-bar">
+                    <div class="mdc-top-app-bar__row contentHeader">
+                        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                            <span id="collection-title" class="mdc-top-app-bar__title"></span>
+                        </section>
+                    </div>
+                </header>
+                <div class="drawer-main-content">
+                    <div class="mdc-top-app-bar--fixed-adjust"></div>
+                    <div class="todo-card mdc-card">
+                        <form id="add-todo-form" action="#" onsubmit="addTodo(this); return false;">
+                            <div class="add-todo-input-wrapper mdc-text-field mdc-text-field--no-label">
+                                <input id="todoText" class="mdc-text-field__input" required
+                                    placeholder="Whats going to be done...">
+                            </div>
+                        </form>
+                        <ul id="todo-list" class="mdc-list" role="listbox">
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="menu">
-                <a hred="namie1.html">Name 1</a><br>
-                <a hred="namie2.html">Name 3</a><br>
-                <a hred="namie3.html">Name 3</a><br>
+        </div>
+    </div>
+    <div id="collection-creation-modal" class="mdc-dialog" role="alertdialog" aria-modal="true"
+        aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface">
+                <h2 class="mdc-dialog__title" id="my-dialog-title">
+                    New list
+                </h2>
+                <hr class="mdc-list-divider">
+                <form id="add-list-form" action="#" onsubmit="addList(this); return false;">
+                    <div class="mdc-dialog__content" id="my-dialog-content">
+                        <div class="mdc-text-field mdc-text-field--outlined">
+                            <input id="listName" class="mdc-text-field__input" required>
+                            <div class="mdc-notched-outline">
+                                <div class="mdc-notched-outline__leading"></div>
+                                <div class="mdc-notched-outline__notch">
+                                    <label class="mdc-floating-label">Name</label>
+                                </div>
+                                <div class="mdc-notched-outline__trailing"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mdc-list-divider">
+                    <footer class="mdc-dialog__actions">
+                        <button type="submit" class="mdc-button mdc-dialog__button mdc-dialog__button--default">
+                            <span class="mdc-button__label">create</span>
+                        </button>
+                    </footer>
+                </form>
             </div>
-            <div class="todo">
-                    <h2>ToDo</h2>
-                    <input type="text" id="myInput" placeholder="Name...">
-                    <span onclick="newElement()" class="addBtn">Add</span>
-            </div>
-            <div class="footer">
-                Lista TODO  ||  Michal Gancarczyk  ||  Lab 7
-            </div>
-        </div>  
-    </body>
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </div>
+    <script type="text/javascript">
+        Array.from(document.getElementsByClassName('mdc-text-field')).forEach(obj => mdc.textField.MDCTextField.attachTo(obj));
+        dialog = new mdc.dialog.MDCDialog(document.getElementById('collection-creation-modal'));
+    </script>
+</body>
+
 </html>
